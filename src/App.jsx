@@ -13,6 +13,7 @@ function App() {
 
   // Refs
   const passwordRef = useRef(null)
+  const copyButtonRef = useRef(null)
 
   // Function to generate password
   const passwordGenerator = useCallback(()=>{
@@ -40,6 +41,12 @@ function App() {
   // Copy Password to clipboard
   const copyPasswordToClipboard = useCallback(()=>{
     passwordRef.current.select();
+    copyButtonRef.current.innerText = 'copied!'
+    copyButtonRef.current.classList.add('bg-orange-500')
+    setTimeout(()=> {
+      copyButtonRef.current.innerText = 'Copy'
+      copyButtonRef.current.classList.remove('bg-orange-500')
+    },1000);
     window.navigator.clipboard.writeText(password)
   }, [password])
 
@@ -55,7 +62,7 @@ function App() {
           readOnly
           ref={passwordRef} />
           <button className='outline-none bg-blue-700 text-white px-3 py-0.5 shrink-0'
-          onClick={copyPasswordToClipboard}>Copy</button>
+          onClick={copyPasswordToClipboard} ref={copyButtonRef} >Copy</button>
         </div>
         <div className='flex text-sm gap-x-2'>
           <div className='flex items-center gap-x-1'>
